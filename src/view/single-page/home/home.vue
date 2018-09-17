@@ -36,7 +36,7 @@
       </i-col>
       <i-col span="14">
         <Card shadow>
-          <chart-bar style="height: 300px;" :value="barData" text="系统访问周活跃度分布"/>
+          <chart-bar v-if="vable" style="height: 300px;" :value="barData" text="系统访问周活跃度分布"/>
         </Card>
       </i-col>
     </Row>
@@ -60,6 +60,7 @@ export default {
       m_score: '',
       user_group: '',
       things_num: '',
+      vable: false,
       pieData: [
         {value: 1, name: '自动化办公'},
         {value: 2, name: '项目审批'},
@@ -105,10 +106,9 @@ export default {
         v.barData.Thu = JSON.parse(response.data.data.weeklog)[4]
         v.barData.Fri = JSON.parse(response.data.data.weeklog)[5]
         v.barData.Sat = JSON.parse(response.data.data.weeklog)[7]
+        this.vable = true
       }
     }).catch(() => {
-      v.barData.Sun = 10
-      console.log(v)
       this.$Message.error('网络连接超时，请稍候重试')
     })
   },
